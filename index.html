@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DRS Sistemas — Software de gestão para o seu negócio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0B2545;
+    --navy-700:#13315C;
+    --blue:#2F6FED;
+    --blue-dark:#1E4FBF;
+    --blue-50:#EEF3FE;
+    --slate:#5B6478;
+    --slate-light:#8791A3;
+    --bg:#F5F7FA;
+    --white:#FFFFFF;
+    --line:#E3E7EF;
+    --green:#1E8E5A;
+    --radius:14px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Inter',sans-serif;
+    color:var(--navy);
+    background:var(--bg);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.disp{font-family:'Space Grotesk',sans-serif;letter-spacing:-0.02em;}
+  a{text-decoration:none;color:inherit;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 24px;}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:13px;font-weight:600;color:var(--blue);
+    text-transform:uppercase;letter-spacing:0.08em;
+    margin-bottom:14px;
+  }
+  .eyebrow::before{content:"";width:18px;height:2px;background:var(--blue);display:inline-block;}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    padding:14px 26px;border-radius:8px;font-weight:600;font-size:15px;
+    cursor:pointer;border:1.5px solid transparent;transition:all .15s ease;
+    font-family:'Inter',sans-serif;
+  }
+  .btn-primary{background:var(--blue);color:#fff;}
+  .btn-primary:hover{background:var(--blue-dark);}
+  .btn-ghost{background:transparent;color:var(--navy);border-color:var(--line);}
+  .btn-ghost:hover{border-color:var(--navy);}
+  .btn-small{padding:10px 18px;font-size:14px;}
+
+  /* HEADER */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(245,247,250,0.92);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;}
+  .logo{display:flex;align-items:center;gap:10px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:19px;color:var(--navy);}
+  .logo-mark{width:34px;height:34px;border-radius:8px;background:var(--navy);position:relative;flex-shrink:0;}
+  .logo-mark::before,.logo-mark::after{content:"";position:absolute;background:var(--blue);border-radius:2px;}
+  .logo-mark::before{width:14px;height:4px;top:10px;left:10px;}
+  .logo-mark::after{width:8px;height:4px;bottom:10px;left:10px;}
+  .nav-links{display:flex;gap:34px;font-size:15px;font-weight:500;color:var(--slate);}
+  .nav-links a:hover{color:var(--navy);}
+  .nav-cta{display:flex;gap:12px;align-items:center;}
+  .nav-toggle{display:none;background:none;border:none;cursor:pointer;padding:8px;}
+  .nav-toggle span{display:block;width:22px;height:2px;background:var(--navy);margin:5px 0;}
+
+  /* HERO */
+  .hero{
+    padding:96px 24px 80px;
+    background:
+      radial-gradient(600px 300px at 85% -10%, rgba(47,111,237,0.14), transparent 70%),
+      linear-gradient(180deg,#0B2545 0%, #10305C 100%);
+    color:#fff;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";position:absolute;inset:0;
+    background-image:linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px);
+    background-size:44px 44px;
+    mask-image:linear-gradient(180deg, rgba(0,0,0,0.9), transparent 75%);
+  }
+  .hero-inner{position:relative;max-width:1160px;margin:0 auto;display:grid;grid-template-columns:1.1fr 0.9fr;gap:56px;align-items:center;}
+  .hero .eyebrow{color:#9DBBFA;}
+  .hero .eyebrow::before{background:#9DBBFA;}
+  .hero h1{font-size:44px;line-height:1.12;font-weight:700;margin-bottom:20px;}
+  .hero h1 span{color:#7FA6FF;}
+  .hero p{font-size:17px;color:#C4D1EA;max-width:480px;margin-bottom:32px;}
+  .hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:38px;}
+  .hero .btn-ghost{border-color:rgba(255,255,255,0.25);color:#fff;}
+  .hero .btn-ghost:hover{border-color:#fff;background:rgba(255,255,255,0.06);}
+  .hero-stats{display:flex;gap:34px;}
+  .hero-stats div{border-left:2px solid rgba(255,255,255,0.18);padding-left:14px;}
+  .hero-stats strong{display:block;font-family:'Space Grotesk',sans-serif;font-size:23px;}
+  .hero-stats span{font-size:13px;color:#9AAAC8;}
+
+  /* HERO PANEL (signature: app launcher / systems tile grid) */
+  .panel{
+    background:#0F2A50;
+    border:1px solid rgba(255,255,255,0.1);
+    border-radius:16px;
+    padding:20px;
+    box-shadow:0 30px 60px rgba(0,0,0,0.35);
+  }
+  .panel-head{display:flex;align-items:center;gap:8px;margin-bottom:16px;}
+  .panel-dot{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.2);}
+  .panel-head span{font-size:12px;color:#8FA0C4;margin-left:6px;font-family:'Space Grotesk',sans-serif;}
+  .tile-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+  .tile{
+    background:rgba(255,255,255,0.045);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:10px;padding:16px 14px;
+  }
+  .tile .ic{width:30px;height:30px;border-radius:7px;background:var(--blue);margin-bottom:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .tile .ic svg{width:17px;height:17px;}
+  .tile p{font-size:13px;font-weight:600;color:#fff;font-family:'Space Grotesk',sans-serif;}
+  .tile small{font-size:11px;color:#8FA0C4;}
+  .tile.wide{grid-column:span 2;display:flex;align-items:center;justify-content:space-between;}
+  .tile.wide .bar{flex:1;height:6px;background:rgba(255,255,255,0.08);border-radius:3px;margin:0 14px;overflow:hidden;}
+  .tile.wide .bar i{display:block;height:100%;width:68%;background:var(--green);}
+
+  /* logo strip */
+  .strip{background:var(--white);border-bottom:1px solid var(--line);padding:26px 24px;}
+  .strip .wrap{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:18px;}
+  .strip span{font-size:13px;color:var(--slate-light);font-weight:500;}
+  .strip .marks{display:flex;gap:30px;flex-wrap:wrap;font-family:'Space Grotesk',sans-serif;font-weight:600;color:#B7BFCE;font-size:15px;}
+
+  section{padding:88px 24px;}
+  .section-head{max-width:600px;margin-bottom:52px;}
+  .section-head h2{font-size:32px;font-weight:600;color:var(--navy);margin-bottom:14px;}
+  .section-head p{color:var(--slate);font-size:16px;}
+  .center{text-align:center;margin-left:auto;margin-right:auto;}
+
+  /* PRODUCTS */
+  .products{background:var(--white);}
+  .product-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+  .p-card{
+    border:1px solid var(--line);border-radius:var(--radius);
+    padding:30px 26px;background:#fff;
+    display:flex;flex-direction:column;gap:16px;
+    transition:border-color .15s ease, transform .15s ease;
+  }
+  .p-card:hover{border-color:var(--blue);transform:translateY(-3px);}
+  .p-tag{
+    width:46px;height:46px;border-radius:10px;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Space Grotesk',sans-serif;font-weight:700;color:#fff;font-size:16px;
+  }
+  .p-card h3{font-size:19px;font-weight:600;color:var(--navy);}
+  .p-card p.desc{color:var(--slate);font-size:14.5px;flex-grow:1;}
+  .p-feats{list-style:none;display:flex;flex-direction:column;gap:8px;margin:2px 0 6px;}
+  .p-feats li{font-size:13.5px;color:var(--slate);display:flex;gap:8px;align-items:flex-start;}
+  .p-feats li::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--blue);margin-top:6px;flex-shrink:0;}
+  .p-card .btn{margin-top:4px;width:100%;}
+  .p-status{font-size:11.5px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;padding:4px 10px;border-radius:20px;width:fit-content;}
+  .status-live{background:#E7F6EE;color:var(--green);}
+  .status-soon{background:var(--blue-50);color:var(--blue-dark);}
+
+  /* WHY */
+  .why{background:var(--bg);}
+  .why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;}
+  .why-card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:26px 22px;}
+  .why-num{font-family:'Space Grotesk',sans-serif;font-size:13px;color:var(--blue);font-weight:600;margin-bottom:14px;}
+  .why-card h3{font-size:16.5px;margin-bottom:8px;color:var(--navy);}
+  .why-card p{font-size:14px;color:var(--slate);}
+
+  /* PROCESS */
+  .process{background:var(--white);}
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative;}
+  .step{padding:0 20px 0 0;position:relative;}
+  .step:not(:last-child)::after{content:"";position:absolute;top:20px;right:-4px;width:100%;height:1px;background:var(--line);}
+  .step-badge{width:40px;height:40px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:600;margin-bottom:18px;position:relative;z-index:1;}
+  .step h3{font-size:16px;margin-bottom:8px;color:var(--navy);}
+  .step p{font-size:13.5px;color:var(--slate);}
+
+  /* TESTIMONIALS */
+  .testi{background:var(--navy);color:#fff;}
+  .testi .section-head h2{color:#fff;}
+  .testi .section-head p{color:#AEBCDA;}
+  .testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+  .t-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:var(--radius);padding:26px;}
+  .t-card p.quote{font-size:14.5px;color:#DCE4F5;margin-bottom:22px;}
+  .t-person{display:flex;align-items:center;gap:12px;}
+  .t-avatar{width:38px;height:38px;border-radius:50%;background:var(--blue);display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;}
+  .t-person strong{display:block;font-size:14px;}
+  .t-person span{font-size:12.5px;color:#93A4C6;}
+
+  /* CTA FINAL */
+  .cta-final{
+    background:linear-gradient(135deg,#0B2545,#164585);
+    color:#fff;text-align:center;padding:90px 24px;
+  }
+  .cta-final h2{font-size:32px;margin-bottom:14px;}
+  .cta-final p{color:#C4D1EA;max-width:480px;margin:0 auto 34px;}
+  .cta-final .btn-primary{background:#fff;color:var(--navy);}
+  .cta-final .btn-primary:hover{background:#E8EEFC;}
+  .cta-final .btn-ghost{border-color:rgba(255,255,255,0.3);color:#fff;}
+
+  /* FOOTER */
+  footer{background:#081B34;color:#93A4C6;padding:60px 24px 30px;}
+  .f-grid{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:40px;margin-bottom:50px;}
+  .f-brand .logo{color:#fff;margin-bottom:14px;}
+  .f-brand p{font-size:13.5px;line-height:1.7;max-width:260px;}
+  .f-col h4{color:#fff;font-size:13.5px;margin-bottom:16px;font-weight:600;}
+  .f-col ul{list-style:none;display:flex;flex-direction:column;gap:10px;}
+  .f-col a{font-size:13.5px;}
+  .f-col a:hover{color:#fff;}
+  .f-bottom{border-top:1px solid rgba(255,255,255,0.08);padding-top:24px;display:flex;justify-content:space-between;font-size:12.5px;flex-wrap:wrap;gap:10px;}
+
+  @media(max-width:900px){
+    .hero-inner{grid-template-columns:1fr;}
+    .panel{max-width:420px;}
+    .product-grid{grid-template-columns:repeat(2,1fr);}
+    .why-grid{grid-template-columns:repeat(2,1fr);}
+    .steps{grid-template-columns:repeat(2,1fr);gap:30px;}
+    .step:not(:last-child)::after{display:none;}
+    .testi-grid{grid-template-columns:1fr;}
+    .f-grid{grid-template-columns:1fr 1fr;}
+  }
+  @media(max-width:640px){
+    .nav-links,.nav-cta .btn-ghost{display:none;}
+    .nav-toggle{display:block;}
+    .hero{padding:64px 20px 56px;}
+    .hero h1{font-size:28px;}
+    .hero p{font-size:15.5px;}
+    .hero-actions .btn{width:100%;}
+    .hero-stats{flex-wrap:wrap;gap:16px 24px;}
+    .panel{padding:16px;}
+    .tile-grid{grid-template-columns:1fr 1fr;gap:8px;}
+    .tile{padding:12px 10px;}
+    .tile .ic{margin-bottom:14px;}
+    .strip .wrap{flex-direction:column;align-items:flex-start;}
+    .strip .marks{gap:16px 22px;}
+    .product-grid{grid-template-columns:1fr;}
+    .why-grid{grid-template-columns:1fr;}
+    .steps{grid-template-columns:1fr;}
+    .testi-grid{grid-template-columns:1fr;}
+    .f-grid{grid-template-columns:1fr;gap:32px;}
+    .f-bottom{flex-direction:column;align-items:flex-start;}
+    section{padding:56px 20px;}
+    .section-head h2{font-size:26px;}
+    .cta-final h2{font-size:26px;}
+  }
+  @media(max-width:380px){
+    .hero-stats{gap:14px 18px;}
+    .hero-stats strong{font-size:19px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav wrap">
+    <a href="#top" class="logo"><span class="logo-mark"></span>DRS Sistemas</a>
+    <nav class="nav-links">
+      <a href="#produtos">Produtos</a>
+      <a href="#diferenciais">Diferenciais</a>
+      <a href="#como-funciona">Como funciona</a>
+      <a href="#depoimentos">Clientes</a>
+      <a href="#contato">Contato</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="#contato" class="btn btn-ghost btn-small">Falar com vendas</a>
+      <a href="#produtos" class="btn btn-primary btn-small">Acessar sistemas</a>
+    </div>
+    <button class="nav-toggle" aria-label="Abrir menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div class="hero-inner wrap">
+    <div>
+      <div class="eyebrow">Software de gestão sob medida</div>
+      <h1>Sistemas que colocam <span>seu negócio no controle</span>, do balcão ao financeiro.</h1>
+      <p>A DRS Sistemas desenvolve softwares de gestão para negócios com operação real: bares e clubes de whiskey, imobiliárias e restaurantes. Também criamos <strong style="color:#fff;">software sob demanda</strong>, desenvolvido de acordo com a necessidade específica de cada cliente.</p>
+      <div class="hero-actions">
+        <a href="produtos.html" class="btn btn-primary">Ver todos os sistemas</a>
+        <a href="#contato" class="btn btn-ghost">Agendar demonstração</a>
+      </div>
+      <div class="hero-stats">
+        <div><strong>3+</strong><span>sistemas em produção</span></div>
+        <div><strong>99,9%</strong><span>disponibilidade</span></div>
+        <div><strong>24/7</strong><span>suporte técnico</span></div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-head"><div class="panel-dot"></div><div class="panel-dot"></div><div class="panel-dot"></div><span>painel.drssistemas.com.br</span></div>
+      <div class="tile-grid">
+        <div class="tile"><div class="ic"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 2H16L15.2 12.5C15.1 14 14.3 15.3 13 16V20H15.5C16.05 20 16.5 20.45 16.5 21C16.5 21.55 16.05 22 15.5 22H8.5C7.95 22 7.5 21.55 7.5 21C7.5 20.45 7.95 20 8.5 20H11V16C9.7 15.3 8.9 14 8.8 12.5L8 2Z" fill="#fff"/><path d="M8.3 6H15.7" stroke="#0F2A50" stroke-width="1.3" stroke-linecap="round"/></svg></div><p>Clube do Whiskey</p><small>Controle de clube</small></div>
+        <div class="tile"><div class="ic"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 21V9L12 3L20 9V21H14V14H10V21H4Z" fill="#fff"/></svg></div><p>Imobiliária</p><small>Locação e vendas</small></div>
+        <div class="tile"><div class="ic"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 2V10C6 11.1 6.9 12 8 12V22H9.5V12C10.6 12 11.5 11.1 11.5 10V2H10V9H9.5V2H8.3V9H7.8V2H6Z" fill="#fff"/><path d="M15.5 2C14.1 2 13 4 13 7C13 9 13.8 10.7 15 11.5V22H16.5V11.5C17.7 10.7 18.5 9 18.5 7C18.5 4 17.4 2 15.5 2Z" fill="#fff"/></svg></div><p>Restaurante</p><small>Comandas e cozinha</small></div>
+        <div class="tile"><div class="ic"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3V21" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><path d="M3 12H21" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/></svg></div><p>Novo sistema</p><small>Em breve</small></div>
+        <div class="tile wide"><span style="font-size:12px;color:#8FA0C4;font-family:'Space Grotesk',sans-serif;">Meta mensal</span><div class="bar"><i></i></div><span style="font-size:12px;color:#fff;font-weight:600;">68%</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="strip">
+  <div class="wrap">
+    <span>Sistemas prontos + software sob demanda para o seu negócio</span>
+    <div class="marks">
+      <span>BARES &amp; CLUBES</span>
+      <span>IMOBILIÁRIAS</span>
+      <span>RESTAURANTES</span>
+      <span>VAREJO</span>
+      <span>SERVIÇOS</span>
+    </div>
+  </div>
+</div>
+
+<section class="products" id="produtos">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Portfólio</div>
+      <h2>Um sistema para cada operação — e sob demanda quando o seu não existe ainda</h2>
+      <p>Cada produto DRS foi desenhado para a rotina real de um segmento. Se o seu negócio tem um processo diferente, desenvolvemos um software sob demanda, do zero, de acordo com a sua necessidade.</p>
+    </div>
+    <div class="product-grid">
+
+      <div class="p-card">
+        <div class="p-tag" style="background:#7C4A2D;">CW</div>
+        <span class="p-status status-live">Em produção</span>
+        <h3>Clube do Whiskey</h3>
+        <p class="desc">Gestão completa para clubes e bares especializados: controle de garrafas por sócio, doses consumidas, reposição e cobrança.</p>
+        <ul class="p-feats">
+          <li>Controle de estoque por garrafa e por sócio</li>
+          <li>Registro de doses e consumo em tempo real</li>
+          <li>Cobrança e faturamento automatizados</li>
+        </ul>
+        <a href="#" class="btn btn-primary">Acessar sistema</a>
+      </div>
+
+      <div class="p-card">
+        <div class="p-tag" style="background:var(--blue);">IM</div>
+        <span class="p-status status-live">Em produção</span>
+        <h3>Sistema para Imobiliária</h3>
+        <p class="desc">Do cadastro de imóveis à assinatura do contrato: gestão de locações, vendas, propostas e repasse a proprietários.</p>
+        <ul class="p-feats">
+          <li>Cadastro de imóveis, proprietários e inquilinos</li>
+          <li>Contratos, boletos e repasses automáticos</li>
+          <li>Portal do proprietário e do inquilino</li>
+        </ul>
+        <a href="#" class="btn btn-primary">Acessar sistema</a>
+      </div>
+
+      <div class="p-card">
+        <div class="p-tag" style="background:var(--green);">RT</div>
+        <span class="p-status status-live">Em produção</span>
+        <h3>Sistema para Restaurante</h3>
+        <p class="desc">Comandas, cozinha e caixa conectados em um só lugar. Reduza erro de pedido e tenha o fechamento de caixa em minutos.</p>
+        <ul class="p-feats">
+          <li>Comandas digitais integradas à cozinha (KDS)</li>
+          <li>Controle de mesas, delivery e balcão</li>
+          <li>Fechamento de caixa e relatórios diários</li>
+        </ul>
+        <a href="#" class="btn btn-primary">Acessar sistema</a>
+      </div>
+
+      <div class="p-card">
+        <div class="p-tag" style="background:var(--slate);">+</div>
+        <span class="p-status status-soon">Sob demanda</span>
+        <h3>Software sob demanda</h3>
+        <p class="desc">Não achou seu segmento? Desenvolvemos o sistema do zero, de acordo com a necessidade específica do seu negócio.</p>
+        <ul class="p-feats">
+          <li>Levantamento gratuito do seu processo</li>
+          <li>Sistema construído 100% sob medida</li>
+          <li>Mesmo padrão de suporte e segurança</li>
+        </ul>
+        <a href="#contato" class="btn btn-ghost">Falar sobre meu negócio</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="why" id="diferenciais">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Por que a DRS</div>
+      <h2>Software feito para operar, não só para demonstrar</h2>
+      <p>Empresas que já têm um sistema pesado e genérico trocam para a DRS pela simplicidade e pelo suporte direto.</p>
+    </div>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-num">Segurança</div>
+        <h3>Dados protegidos</h3>
+        <p>Backup diário automático e acesso controlado por permissão de usuário.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-num">Suporte</div>
+        <h3>Time técnico direto</h3>
+        <p>Sem central de atendimento terceirizada. Você fala com quem entende do sistema.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-num">Implantação</div>
+        <h3>No ar em dias, não meses</h3>
+        <p>Migração de dados e treinamento da equipe incluídos em toda contratação.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-num">Evolução</div>
+        <h3>Atualizações constantes</h3>
+        <p>Novas funções chegam com base no que os próprios clientes pedem.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="process" id="como-funciona">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Como funciona</div>
+      <h2>Do primeiro contato ao sistema no ar</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-badge">1</div>
+        <h3>Diagnóstico</h3>
+        <p>Entendemos a rotina do seu negócio e qual sistema (ou ajuste) resolve o problema real.</p>
+      </div>
+      <div class="step">
+        <div class="step-badge">2</div>
+        <h3>Configuração</h3>
+        <p>Ajustamos o sistema escolhido com seus produtos, preços e regras de operação.</p>
+      </div>
+      <div class="step">
+        <div class="step-badge">3</div>
+        <h3>Treinamento</h3>
+        <p>Sua equipe aprende a usar o sistema no dia a dia, com acompanhamento próximo.</p>
+      </div>
+      <div class="step">
+        <div class="step-badge">4</div>
+        <h3>Operação e suporte</h3>
+        <p>Sistema no ar com suporte contínuo e atualizações incluídas no plano.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="testi" id="depoimentos">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Clientes</div>
+      <h2>Quem já opera com a DRS</h2>
+      <p>Depoimentos de exemplo — substitua pelos seus clientes reais antes de publicar.</p>
+    </div>
+    <div class="testi-grid">
+      <div class="t-card">
+        <p class="quote">"O controle de garrafas por sócio acabou com as planilhas. Hoje sei exatamente o estoque de cada cliente do clube."</p>
+        <div class="t-person">
+          <div class="t-avatar">RM</div>
+          <div><strong>Ricardo Mendes</strong><span>Sócio, Whiskey Club</span></div>
+        </div>
+      </div>
+      <div class="t-card">
+        <p class="quote">"Os repasses para proprietários que levavam um dia inteiro agora saem em poucos cliques todo mês."</p>
+        <div class="t-person">
+          <div class="t-avatar">CA</div>
+          <div><strong>Camila Azevedo</strong><span>Gestora, Imobiliária Central</span></div>
+        </div>
+      </div>
+      <div class="t-card">
+        <p class="quote">"A cozinha para de errar pedido desde que passamos a usar o sistema. O caixa fecha sozinho no fim do dia."</p>
+        <div class="t-person">
+          <div class="t-avatar">JP</div>
+          <div><strong>João Pereira</strong><span>Proprietário, restaurante</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-final" id="contato">
+  <div class="wrap">
+    <h2>Pronto para colocar sua operação no controle?</h2>
+    <p>Fale com o time DRS e veja qual sistema resolve o seu negócio.</p>
+    <div class="hero-actions" style="justify-content:center;">
+      <a href="https://wa.me/5521970387184?text=Ol%C3%A1!%20Quero%20falar%20com%20um%20especialista%20da%20DRS%20Sistemas." class="btn btn-primary" target="_blank" rel="noopener">Falar com um especialista</a>
+      <a href="#produtos" class="btn btn-ghost">Ver sistemas</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="f-grid">
+      <div class="f-brand">
+        <a href="#top" class="logo"><span class="logo-mark"></span>DRS Sistemas</a>
+        <p>Software de gestão para negócios que não podem parar de operar. Um sistema por segmento, feito para uso real.</p>
+      </div>
+      <div class="f-col">
+        <h4>Produtos</h4>
+        <ul>
+          <li><a href="#produtos">Clube do Whiskey</a></li>
+          <li><a href="#produtos">Sistema para Imobiliária</a></li>
+          <li><a href="#produtos">Sistema para Restaurante</a></li>
+          <li><a href="#contato">Sob demanda</a></li>
+        </ul>
+      </div>
+      <div class="f-col">
+        <h4>Empresa</h4>
+        <ul>
+          <li><a href="#diferenciais">Diferenciais</a></li>
+          <li><a href="#como-funciona">Como funciona</a></li>
+          <li><a href="#depoimentos">Clientes</a></li>
+          <li><a href="#contato">Contato</a></li>
+        </ul>
+      </div>
+      <div class="f-col">
+        <h4>Contato</h4>
+        <ul>
+          <li><a href="mailto:contato@drssistemas.com.br">contato@drssistemas.com.br</a></li>
+          <li><a href="tel:+5500000000000">(00) 00000-0000</a></li>
+          <li><a href="#">Rio de Janeiro, RJ</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="f-bottom">
+      <span>© 2026 DRS Sistemas. Todos os direitos reservados.</span>
+      <span>Política de privacidade · Termos de uso</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const toggle = document.querySelector('.nav-toggle');
+  const links = document.querySelector('.nav-links');
+  toggle.addEventListener('click', () => {
+    const open = links.style.display === 'flex';
+    links.style.display = open ? 'none' : 'flex';
+    links.style.cssText += open ? '' : 'flex-direction:column;position:absolute;top:64px;left:0;right:0;background:#F5F7FA;padding:20px 24px;border-bottom:1px solid #E3E7EF;';
+  });
+</script>
+
+</body>
+</html>

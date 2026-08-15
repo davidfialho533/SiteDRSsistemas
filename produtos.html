@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nossos sistemas — DRS Sistemas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0B2545;
+    --navy-700:#13315C;
+    --blue:#2F6FED;
+    --blue-dark:#1E4FBF;
+    --blue-50:#EEF3FE;
+    --slate:#5B6478;
+    --slate-light:#8791A3;
+    --bg:#F5F7FA;
+    --white:#FFFFFF;
+    --line:#E3E7EF;
+    --green:#1E8E5A;
+    --radius:14px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Inter',sans-serif;color:var(--navy);background:var(--bg);line-height:1.6;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3,.disp{font-family:'Space Grotesk',sans-serif;letter-spacing:-0.02em;}
+  a{text-decoration:none;color:inherit;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 24px;}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--blue);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:14px;}
+  .eyebrow::before{content:"";width:18px;height:2px;background:var(--blue);display:inline-block;}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 26px;border-radius:8px;font-weight:600;font-size:15px;cursor:pointer;border:1.5px solid transparent;transition:all .15s ease;font-family:'Inter',sans-serif;}
+  .btn-primary{background:var(--blue);color:#fff;}
+  .btn-primary:hover{background:var(--blue-dark);}
+  .btn-ghost{background:transparent;color:var(--navy);border-color:var(--line);}
+  .btn-ghost:hover{border-color:var(--navy);}
+  .btn-small{padding:10px 18px;font-size:14px;}
+
+  header{position:sticky;top:0;z-index:50;background:rgba(245,247,250,0.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;}
+  .logo{display:flex;align-items:center;gap:10px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:19px;color:var(--navy);}
+  .logo-mark{width:34px;height:34px;border-radius:8px;background:var(--navy);position:relative;flex-shrink:0;}
+  .logo-mark::before,.logo-mark::after{content:"";position:absolute;background:var(--blue);border-radius:2px;}
+  .logo-mark::before{width:14px;height:4px;top:10px;left:10px;}
+  .logo-mark::after{width:8px;height:4px;bottom:10px;left:10px;}
+  .nav-links{display:flex;gap:34px;font-size:15px;font-weight:500;color:var(--slate);}
+  .nav-links a:hover{color:var(--navy);}
+  .nav-cta{display:flex;gap:12px;align-items:center;}
+  .nav-toggle{display:none;background:none;border:none;cursor:pointer;padding:8px;}
+  .nav-toggle span{display:block;width:22px;height:2px;background:var(--navy);margin:5px 0;}
+
+  .pagehead{padding:64px 24px 48px;background:linear-gradient(180deg,#0B2545 0%,#10305C 100%);color:#fff;}
+  .pagehead .wrap{max-width:720px;}
+  .pagehead .eyebrow{color:#9DBBFA;}
+  .pagehead .eyebrow::before{background:#9DBBFA;}
+  .pagehead h1{font-size:36px;margin-bottom:14px;}
+  .pagehead p{color:#C4D1EA;font-size:16px;}
+
+  .quicknav{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:71px;z-index:40;}
+  .quicknav .wrap{display:flex;gap:10px;padding:14px 24px;overflow-x:auto;}
+  .qn-item{flex-shrink:0;padding:9px 16px;border-radius:20px;border:1px solid var(--line);font-size:13.5px;font-weight:500;color:var(--slate);white-space:nowrap;}
+  .qn-item:hover{border-color:var(--blue);color:var(--navy);}
+
+  .project{padding:80px 24px;border-bottom:1px solid var(--line);}
+  .project:nth-child(even){background:#fff;}
+  .project-inner{display:grid;grid-template-columns:0.9fr 1.1fr;gap:56px;align-items:start;}
+  .project-inner.reverse{direction:rtl;}
+  .project-inner.reverse > *{direction:ltr;}
+  .p-icon{width:56px;height:56px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;color:#fff;font-size:19px;margin-bottom:22px;}
+  .p-status{display:inline-block;font-size:11.5px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;padding:4px 10px;border-radius:20px;margin-bottom:14px;}
+  .status-live{background:#E7F6EE;color:var(--green);}
+  .status-soon{background:var(--blue-50);color:var(--blue-dark);}
+  .project h2{font-size:28px;margin-bottom:14px;color:var(--navy);}
+  .project .lead{color:var(--slate);font-size:15.5px;margin-bottom:26px;max-width:440px;}
+  .project .btn{margin-right:10px;}
+  .project-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;}
+
+  .feat-list{display:flex;flex-direction:column;gap:18px;}
+  .feat-item{display:flex;gap:14px;padding:18px;background:var(--bg);border:1px solid var(--line);border-radius:12px;}
+  .project:nth-child(even) .feat-item{background:var(--bg);}
+  .feat-num{font-family:'Space Grotesk',sans-serif;font-weight:600;color:var(--blue);font-size:14px;flex-shrink:0;width:26px;}
+  .feat-item h3{font-size:15px;margin-bottom:5px;color:var(--navy);}
+  .feat-item p{font-size:13.5px;color:var(--slate);}
+
+  .mock{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;box-shadow:0 20px 40px rgba(11,37,69,0.08);}
+  .mock-bar{display:flex;align-items:center;gap:6px;padding:12px 14px;background:#F1F3F7;border-bottom:1px solid var(--line);}
+  .mock-bar span{width:8px;height:8px;border-radius:50%;background:#D7DBE3;}
+  .mock-body{padding:20px;}
+  .mock-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--line);font-size:13px;}
+  .mock-row:last-child{border-bottom:none;}
+  .mock-row .name{font-weight:600;color:var(--navy);}
+  .mock-row .meta{color:var(--slate-light);font-size:12px;}
+  .mock-badge{font-size:11px;font-weight:600;padding:3px 9px;border-radius:12px;}
+  .badge-ok{background:#E7F6EE;color:var(--green);}
+  .badge-wait{background:#FFF4E5;color:#B5730C;}
+
+  .shot{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;box-shadow:0 20px 40px rgba(11,37,69,0.08);}
+  .shot img{width:100%;display:block;}
+  .shot-gallery{margin-top:56px;}
+  .shot-gallery .gal-head{max-width:560px;margin:0 auto 32px;text-align:center;}
+  .shot-gallery .gal-head h3{font-size:22px;color:var(--navy);margin-bottom:10px;}
+  .shot-gallery .gal-head p{color:var(--slate);font-size:14.5px;}
+  .shot-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+  .shot-card{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:0 12px 28px rgba(11,37,69,0.06);}
+  .shot-card .shot-img{border-bottom:1px solid var(--line);overflow:hidden;max-height:210px;cursor:zoom-in;position:relative;}
+  .shot-card .shot-img img{width:100%;display:block;object-fit:cover;object-position:top;transition:transform .35s ease;}
+  .shot-card .shot-img:hover img{transform:scale(1.06);}
+  .shot-card .shot-info{padding:16px 18px 18px;}
+  .shot-card h4{font-size:14.5px;color:var(--navy);margin-bottom:5px;}
+  .shot-card p{font-size:13px;color:var(--slate);}
+  .shot .shot-img,.shot > img{cursor:zoom-in;}
+  @media(max-width:900px){.shot-grid{grid-template-columns:1fr 1fr;}}
+  @media(max-width:640px){.shot-grid{grid-template-columns:1fr;}}
+
+  .lightbox{position:fixed;inset:0;background:rgba(8,17,32,0.86);display:none;align-items:center;justify-content:center;z-index:200;padding:40px 24px;opacity:0;transition:opacity .25s ease;}
+  .lightbox.open{display:flex;opacity:1;}
+  .lightbox-inner{position:relative;max-width:min(1100px,92vw);max-height:88vh;transform:scale(.92);transition:transform .25s ease;}
+  .lightbox.open .lightbox-inner{transform:scale(1);}
+  .lightbox-inner img{max-width:100%;max-height:88vh;display:block;border-radius:10px;box-shadow:0 30px 70px rgba(0,0,0,0.5);}
+  .lightbox-close{position:absolute;top:-44px;right:0;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);color:#fff;font-size:20px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+  .lightbox-close:hover{background:rgba(255,255,255,0.22);}
+  @media(max-width:640px){.lightbox-close{top:-40px;right:0;}}
+
+  .cta-final{background:linear-gradient(135deg,#0B2545,#164585);color:#fff;text-align:center;padding:80px 24px;}
+  .cta-final h2{font-size:30px;margin-bottom:14px;}
+  .cta-final p{color:#C4D1EA;max-width:460px;margin:0 auto 30px;}
+  .cta-final .btn-primary{background:#fff;color:var(--navy);}
+  .cta-final .btn-primary:hover{background:#E8EEFC;}
+  .cta-final .btn-ghost{border-color:rgba(255,255,255,0.3);color:#fff;}
+  .cta-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+
+  footer{background:#081B34;color:#93A4C6;padding:40px 24px;text-align:center;font-size:12.5px;}
+  footer a{color:#93A4C6;}
+
+  @media(max-width:900px){
+    .project-inner,.project-inner.reverse{grid-template-columns:1fr;direction:ltr;}
+  }
+  @media(max-width:640px){
+    .nav-links,.nav-cta .btn-ghost{display:none;}
+    .nav-toggle{display:block;}
+    .pagehead{padding:48px 20px 36px;}
+    .pagehead h1{font-size:27px;}
+    .project{padding:56px 20px;}
+    .project h2{font-size:23px;}
+    .project-actions .btn{width:100%;}
+    .cta-final h2{font-size:24px;}
+    .cta-actions .btn{width:100%;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav wrap">
+    <a href="index.html" class="logo"><span class="logo-mark"></span>DRS Sistemas</a>
+    <nav class="nav-links">
+      <a href="index.html#produtos">Produtos</a>
+      <a href="index.html#diferenciais">Diferenciais</a>
+      <a href="index.html#como-funciona">Como funciona</a>
+      <a href="index.html#contato">Contato</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="index.html#contato" class="btn btn-ghost btn-small">Falar com vendas</a>
+      <a href="#cube" class="btn btn-primary btn-small">Ver sistemas</a>
+    </div>
+    <button class="nav-toggle" aria-label="Abrir menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<section class="pagehead">
+  <div class="wrap">
+    <div class="eyebrow">Portfólio completo</div>
+    <h1>Conheça cada sistema DRS em detalhe</h1>
+    <p>Sistemas prontos para segmentos específicos e software sob demanda, desenvolvido de acordo com a necessidade do seu negócio. Veja o que resolve, principais funções e como acessar cada um.</p>
+  </div>
+</section>
+
+<nav class="quicknav">
+  <div class="wrap">
+    <a class="qn-item" href="#cube">Clube do Whiskey</a>
+    <a class="qn-item" href="#imobiliaria">Sistema para Imobiliária</a>
+    <a class="qn-item" href="#restaurante">Sistema para Restaurante</a>
+    <a class="qn-item" href="#sobmedida">Software sob demanda</a>
+  </div>
+</nav>
+
+<!-- PROJETO 1: CLUBE DO WHISKEY -->
+<section class="project" id="cube">
+  <div class="wrap project-inner">
+    <div>
+      <div class="p-icon" style="background:#7C4A2D;">CW</div>
+      <span class="p-status status-live">Em produção</span>
+      <h2>Clube do Whiskey</h2>
+      <p class="lead">Sistema de gestão para clubes e bares especializados em whiskey. Controla o estoque de garrafas por sócio, o consumo por dose e a cobrança, tudo em um painel só.</p>
+      <p style="font-size:13.5px;color:var(--slate-light);margin:-16px 0 26px;max-width:440px;">Este é apenas um dos sistemas do portfólio DRS — a empresa também mantém controle para <a href="#imobiliaria" style="color:var(--blue);font-weight:600;">imobiliárias</a>, para <a href="#restaurante" style="color:var(--blue);font-weight:600;">restaurantes</a> e <a href="#sobmedida" style="color:var(--blue);font-weight:600;">software sob medida</a> para outros segmentos.</p>
+      <div class="feat-list">
+        <div class="feat-item">
+          <span class="feat-num">01</span>
+          <div><h3>Garrafas por sócio</h3><p>Cada garrafa fica vinculada a um sócio, com histórico de compra e nível restante.</p></div>
+        </div>
+        <div class="feat-item">
+          <span class="feat-num">02</span>
+          <div><h3>Registro de doses</h3><p>O atendente lança a dose servida e o sistema desconta automaticamente do estoque do sócio.</p></div>
+        </div>
+        <div class="feat-item">
+          <span class="feat-num">03</span>
+          <div><h3>Cobrança e faturamento</h3><p>Fechamento mensal por sócio, com envio de fatura e histórico de consumo.</p></div>
+        </div>
+      </div>
+      <div class="project-actions">
+        <a href="#" class="btn btn-primary">Acessar o Clube do Whiskey</a>
+        <a href="index.html#contato" class="btn btn-ghost">Pedir demonstração</a>
+      </div>
+    </div>
+    <div class="shot">
+      <img src="assets/cube/garrafas.png" alt="Painel de controle de garrafas do Clube do Whiskey, mostrando doses restantes por sócio">
+    </div>
+  </div>
+
+  <div class="wrap shot-gallery">
+    <div class="gal-head">
+      <h3>Veja o sistema por dentro</h3>
+      <p>Telas reais do Clube do Whiskey em produção — do login à emissão da ficha de custódia de cada garrafa.</p>
+    </div>
+    <div class="shot-grid">
+      <div class="shot-card">
+        <div class="shot-img"><img src="assets/cube/login.png" alt="Tela de login administrativo do Clube do Whiskey"></div>
+        <div class="shot-info"><h4>Acesso administrativo</h4><p>Login separado para administrador e atendente, com opção de entrar também via Google.</p></div>
+      </div>
+      <div class="shot-card">
+        <div class="shot-img"><img src="assets/cube/rotulos.png" alt="Tela de gestão de rótulos e produtos do Clube do Whiskey"></div>
+        <div class="shot-info"><h4>Catálogo de rótulos</h4><p>Cada rótulo com categoria, origem, preço, doses por garrafa e localização física no bar.</p></div>
+      </div>
+      <div class="shot-card">
+        <div class="shot-img"><img src="assets/cube/garrafas.png" alt="Tela de controle de garrafas por sócio no Clube do Whiskey"></div>
+        <div class="shot-info"><h4>Controle por garrafa</h4><p>Acompanhamento visual de doses consumidas e restantes de cada garrafa aberta.</p></div>
+      </div>
+      <div class="shot-card">
+        <div class="shot-img"><img src="assets/cube/cartela.png" alt="Ficha de custódia de garrafa gerada em PDF pelo Clube do Whiskey"></div>
+        <div class="shot-info"><h4>Ficha de custódia</h4><p>Documento pronto para impressão com todo o histórico de consumo do sócio.</p></div>
+      </div>
+      <div class="shot-card">
+        <div class="shot-img"><img src="assets/cube/estoque.png" alt="Tela de controle de estoque do Clube do Whiskey com alertas de reposição"></div>
+        <div class="shot-info"><h4>Estoque com alertas</h4><p>Aviso automático de estoque baixo, crítico ou zerado, produto por produto.</p></div>
+      </div>
+      <div class="shot-card">
+        <div class="shot-img"><img src="assets/cube/mensalidades.png" alt="Tela de mensalidades e planos de associados do Clube do Whiskey"></div>
+        <div class="shot-info"><h4>Mensalidades e planos</h4><p>Cobrança mensal por associado, com status de pagamento e valor a receber.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap shot-gallery">
+    <div class="gal-head">
+      <h3>Ponto de Venda: feito para vender combos e doses avulsas</h3>
+      <p>Além do controle de garrafas por sócio, o Clube do Whiskey tem um PDV completo — pensado para agilizar a venda de combos, drinks e doses no balcão.</p>
+    </div>
+    <div class="shot-grid">
+      <div class="shot-card">
+        <div class="shot-img"><img src="assets/cube/pdv-produtos.png" alt="Tela de nova venda com combos e doses, carrinho lateral e total em tempo real"></div>
+        <div class="shot-info"><h4>Venda de combos em 1 clique</h4><p>Aba própria de "Combos & Doses" — o atendente monta a venda mais rápido, sem procurar item por item, e o carrinho já mostra o total.</p></div>
+      </div>
+      <div class="shot-card">
+        <div class="shot-img"><img src="assets/cube/pdv-pagamento.png" alt="Tela de pagamento da venda com atalhos de teclado para cada forma de pagamento"></div>
+        <div class="shot-info"><h4>Checkout rápido com atalhos</h4><p>Dinheiro, débito, crédito, PIX ou agendado — cada forma tem um atalho de teclado (F1 a F6), o que acelera o fechamento em horário de pico.</p></div>
+      </div>
+      <div class="shot-card">
+        <div class="shot-img"><img src="assets/cube/pdv-cliente.png" alt="Tela final da venda com identificação opcional do cliente e emissão de nota fiscal"></div>
+        <div class="shot-info"><h4>Identificação e nota fiscal</h4><p>Vincular o cliente é opcional, sem travar a venda — e a nota fiscal pode ser emitida na hora, direto do fluxo de venda.</p></div>
+      </div>
+      <div class="shot-card">
+        <div class="shot-img"><img src="assets/cube/combo-detalhes.png" alt="Tela de cadastro de um combo, com preço, categoria e opção de venda no delivery"></div>
+        <div class="shot-info"><h4>Combos configuráveis</h4><p>Cada combo tem preço próprio, código de barras e pode ser habilitado para venda também no delivery, sem duplicar cadastro.</p></div>
+      </div>
+      <div class="shot-card">
+        <div class="shot-img"><img src="assets/cube/combo-produtos.png" alt="Tela de configuração dos grupos de produtos obrigatórios de um combo"></div>
+        <div class="shot-info"><h4>Baixa automática no estoque</h4><p>Cada combo é montado com grupos de produtos obrigatórios (ex: bebida + acompanhamento) — o sistema avisa se algo não foi vinculado, evitando furo no estoque e no relatório de lucro.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJETO 2: IMOBILIÁRIA -->
+<section class="project" id="imobiliaria">
+  <div class="wrap project-inner reverse">
+    <div>
+      <div class="p-icon" style="background:var(--blue);">IM</div>
+      <span class="p-status status-live">Em produção</span>
+      <h2>Sistema para Imobiliária</h2>
+      <p class="lead">Do cadastro do imóvel à assinatura do contrato. Gerencia locações, vendas, propostas e repasses a proprietários em um fluxo único.</p>
+      <div class="feat-list">
+        <div class="feat-item">
+          <span class="feat-num">01</span>
+          <div><h3>Cadastro completo</h3><p>Imóveis, proprietários e inquilinos organizados com histórico de cada relação.</p></div>
+        </div>
+        <div class="feat-item">
+          <span class="feat-num">02</span>
+          <div><h3>Contratos e boletos</h3><p>Geração de contrato, emissão de boleto e controle de inadimplência automatizados.</p></div>
+        </div>
+        <div class="feat-item">
+          <span class="feat-num">03</span>
+          <div><h3>Repasse a proprietários</h3><p>Cálculo e envio do repasse mensal já com taxa de administração descontada.</p></div>
+        </div>
+      </div>
+      <div class="project-actions">
+        <a href="#" class="btn btn-primary">Acessar o sistema de Imobiliária</a>
+        <a href="index.html#contato" class="btn btn-ghost">Pedir demonstração</a>
+      </div>
+    </div>
+    <div class="shot">
+      <img src="assets/imobiliaria/visaogeral.png" alt="Painel de visão geral do sistema para imobiliária, com imóveis disponíveis, leads ativos, contratos e receita mensal">
+    </div>
+  </div>
+
+  <div class="wrap shot-gallery">
+    <div class="gal-head">
+      <h3>Veja o sistema por dentro</h3>
+      <p>Telas reais do sistema para Imobiliária em produção — do login à visão geral com todos os módulos ativos.</p>
+    </div>
+    <div class="shot-grid">
+      <div class="shot-card">
+        <div class="shot-img"><img src="assets/imobiliaria/login.png" alt="Tela de login do sistema para imobiliária, com identificador da imobiliária, e-mail e senha"></div>
+        <div class="shot-info"><h4>Acesso multiempresa</h4><p>Cada imobiliária entra com seu próprio identificador — os dados ficam isolados por empresa, mesmo com várias carteiras no mesmo sistema.</p></div>
+      </div>
+      <div class="shot-card">
+        <div class="shot-img"><img src="assets/imobiliaria/imoveis.png" alt="Tela de listagem de imóveis com status alugado, disponível, valor e número de quartos"></div>
+        <div class="shot-info"><h4>Carteira de imóveis</h4><p>Todos os imóveis num só lugar, com status de locação ou venda, valor e detalhes atualizados em tempo real.</p></div>
+      </div>
+      <div class="shot-card">
+        <div class="shot-img"><img src="assets/imobiliaria/crmleads.png" alt="Tela de CRM com funil de leads em formato kanban, do novo lead até o fechamento"></div>
+        <div class="shot-info"><h4>CRM com funil visual</h4><p>Leads organizados em kanban — novo, contatado, visita, proposta, negociação e ganho — sem perder nenhum contato pelo caminho.</p></div>
+      </div>
+      <div class="shot-card">
+        <div class="shot-img"><img src="assets/imobiliaria/locacoes.png" alt="Tela de contratos de locação com inquilino, valor mensal, status e período"></div>
+        <div class="shot-info"><h4>Locações centralizadas</h4><p>Todos os contratos de locação com status, valor e vigência à vista, prontos para renovar ou encerrar.</p></div>
+      </div>
+      <div class="shot-card">
+        <div class="shot-img"><img src="assets/imobiliaria/fichainquilino.png" alt="Tela de análise de ficha de inquilino com fluxo desde rascunho até contrato gerado"></div>
+        <div class="shot-info"><h4>Análise de inquilino guiada</h4><p>Fluxo claro — rascunho, análise de renda, aprovação e geração do contrato — reduz erro humano na hora de aprovar um candidato.</p></div>
+      </div>
+      <div class="shot-card">
+        <div class="shot-img"><img src="assets/imobiliaria/contratoslegais.png" alt="Tela de contratos legais com status de assinatura eletrônica"></div>
+        <div class="shot-info"><h4>Assinatura eletrônica</h4><p>Contratos e promessas de compra e venda acompanhados por status de assinatura, sem precisar sair do sistema para saber quem já assinou.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap shot-gallery">
+    <div class="gal-head">
+      <h3>Vendas, financeiro e resultado — tudo conectado</h3>
+      <p>Além da locação, o sistema acompanha o funil de vendas, o financeiro da carteira e gera relatórios prontos para a diretoria.</p>
+    </div>
+    <div class="shot-grid">
+      <div class="shot-card">
+        <div class="shot-img"><img src="assets/imobiliaria/vendas.png" alt="Tela de propostas de venda com etapas de financiamento, análise de crédito e conclusão"></div>
+        <div class="shot-info"><h4>Funil de vendas completo</h4><p>Da proposta ao financiamento aprovado e conclusão da venda, com comissão do corretor calculada automaticamente.</p></div>
+      </div>
+      <div class="shot-card">
+        <div class="shot-img"><img src="assets/imobiliaria/relatorios.png" alt="Dashboard de relatórios e gráficos com vacância, ocupação, recebido e inadimplência"></div>
+        <div class="shot-info"><h4>Indicadores em tempo real</h4><p>Vacância, ocupação, inadimplência e receita comparada mês a mês — a saúde da carteira visível num único painel.</p></div>
+      </div>
+      <div class="shot-card">
+        <div class="shot-img"><img src="assets/imobiliaria/financeiro.png" alt="Tela financeira com cobranças pendentes, cobranças pagas e repasses a proprietários"></div>
+        <div class="shot-info"><h4>Cobrança e repasse automatizados</h4><p>Gera PIX ou boleto direto da cobrança e controla o repasse ao proprietário já com a taxa de administração descontada.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJETO 3: RESTAURANTE -->
+<section class="project" id="restaurante">
+  <div class="wrap project-inner">
+    <div>
+      <div class="p-icon" style="background:var(--green);">RT</div>
+      <span class="p-status status-live">Em produção</span>
+      <h2>Sistema para Restaurante</h2>
+      <p class="lead">Comandas, cozinha e caixa conectados. Menos erro de pedido, fechamento de caixa em minutos e visão completa do salão em tempo real.</p>
+      <div class="feat-list">
+        <div class="feat-item">
+          <span class="feat-num">01</span>
+          <div><h3>Comanda digital</h3><p>Pedido lançado na mesa vai direto para a tela da cozinha (KDS), sem papel.</p></div>
+        </div>
+        <div class="feat-item">
+          <span class="feat-num">02</span>
+          <div><h3>Mesas, delivery e balcão</h3><p>Um único painel para acompanhar todos os canais de venda do dia.</p></div>
+        </div>
+        <div class="feat-item">
+          <span class="feat-num">03</span>
+          <div><h3>Fechamento de caixa</h3><p>Relatório diário automático, com conferência de sangria e formas de pagamento.</p></div>
+        </div>
+      </div>
+      <div class="project-actions">
+        <a href="#" class="btn btn-primary">Acessar o sistema de Restaurante</a>
+        <a href="index.html#contato" class="btn btn-ghost">Pedir demonstração</a>
+      </div>
+    </div>
+    <div class="mock">
+      <div class="mock-bar"><span></span><span></span><span></span></div>
+      <div class="mock-body">
+        <div class="mock-row"><div><div class="name">Mesa 07</div><div class="meta">2 itens · cozinha</div></div><span class="mock-badge badge-wait">Preparando</span></div>
+        <div class="mock-row"><div><div class="name">Delivery #218</div><div class="meta">iFood · saída às 20:40</div></div><span class="mock-badge badge-ok">A caminho</span></div>
+        <div class="mock-row"><div><div class="name">Mesa 12</div><div class="meta">Pedido lançado</div></div><span class="mock-badge badge-ok">Entregue</span></div>
+        <div class="mock-row"><div><div class="name">Caixa do dia</div><div class="meta">Fechamento 23:00</div></div><span class="mock-badge badge-wait">Em aberto</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOB MEDIDA -->
+<section class="project" id="sobmedida">
+  <div class="wrap project-inner reverse">
+    <div>
+      <div class="p-icon" style="background:var(--slate);">+</div>
+      <span class="p-status status-soon">Sob demanda</span>
+      <h2>Software sob demanda, feito para o seu negócio</h2>
+      <p class="lead">Não achou seu segmento nos sistemas acima? Desenvolvemos software do zero, de acordo com a necessidade específica da sua operação — seguindo o mesmo padrão de segurança e suporte dos sistemas prontos.</p>
+      <div class="feat-list">
+        <div class="feat-item">
+          <span class="feat-num">01</span>
+          <div><h3>Diagnóstico gratuito</h3><p>Mapeamos sua rotina atual antes de propor qualquer sistema.</p></div>
+        </div>
+        <div class="feat-item">
+          <span class="feat-num">02</span>
+          <div><h3>Desenvolvimento sob medida</h3><p>Telas, regras e funções pensadas exclusivamente para o seu processo, não um sistema genérico adaptado.</p></div>
+        </div>
+        <div class="feat-item">
+          <span class="feat-num">03</span>
+          <div><h3>Mesmo padrão DRS</h3><p>Backup diário, suporte direto e atualizações inclusas, como nos demais sistemas.</p></div>
+        </div>
+      </div>
+      <div class="project-actions">
+        <a href="index.html#contato" class="btn btn-primary">Falar sobre meu negócio</a>
+      </div>
+    </div>
+    <div class="mock">
+      <div class="mock-bar"><span></span><span></span><span></span></div>
+      <div class="mock-body">
+        <div class="mock-row"><div><div class="name">Etapa 1</div><div class="meta">Diagnóstico do processo</div></div><span class="mock-badge badge-ok">Feito</span></div>
+        <div class="mock-row"><div><div class="name">Etapa 2</div><div class="meta">Proposta e escopo</div></div><span class="mock-badge badge-wait">Em análise</span></div>
+        <div class="mock-row"><div><div class="name">Etapa 3</div><div class="meta">Desenvolvimento</div></div><span class="mock-badge badge-wait">Aguardando</span></div>
+        <div class="mock-row"><div><div class="name">Etapa 4</div><div class="meta">Sistema no ar</div></div><span class="mock-badge badge-wait">Aguardando</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-final">
+  <div class="wrap">
+    <h2>Quer ver algum sistema funcionando de perto?</h2>
+    <p>Agende uma demonstração com o time DRS, sem compromisso.</p>
+    <div class="cta-actions">
+      <a href="https://wa.me/5521970387184?text=Ol%C3%A1!%20Quero%20agendar%20uma%20demonstra%C3%A7%C3%A3o%20de%20um%20sistema%20DRS." class="btn btn-primary" target="_blank" rel="noopener">Agendar demonstração</a>
+      <a href="index.html" class="btn btn-ghost">Voltar para a página inicial</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 DRS Sistemas. Todos os direitos reservados. · <a href="index.html">drssistemas.com.br</a></p>
+</footer>
+
+<div class="lightbox" id="lightbox">
+  <div class="lightbox-inner">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Fechar">&times;</button>
+    <img id="lightboxImg" src="" alt="">
+  </div>
+</div>
+
+<script>
+  const toggle = document.querySelector('.nav-toggle');
+  const links = document.querySelector('.nav-links');
+  toggle.addEventListener('click', () => {
+    const open = links.style.display === 'flex';
+    links.style.display = open ? 'none' : 'flex';
+    links.style.cssText += open ? '' : 'flex-direction:column;position:absolute;top:64px;left:0;right:0;background:#F5F7FA;padding:20px 24px;border-bottom:1px solid #E3E7EF;';
+  });
+
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+  const lightboxClose = document.getElementById('lightboxClose');
+
+  function openLightbox(src, alt){
+    lightboxImg.src = src;
+    lightboxImg.alt = alt || '';
+    lightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox(){
+    lightbox.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('.shot-card .shot-img img, .shot > img').forEach(img => {
+    img.addEventListener('click', () => openLightbox(img.src, img.alt));
+  });
+
+  lightboxClose.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
+</script>
+
+</body>
+</html>
